@@ -5,12 +5,9 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-    res.locals.user = req.user;
-    next();
-})
 
 router.get('/signup', (req, res) => {
+    console.log(req.user.name);
     res.render('signup');
 })
 
@@ -47,7 +44,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
             return res.redirect('/');
         });
     })(req, res, next);
-    //res.render('login');
+   
 });
 
 

@@ -10,14 +10,20 @@
           <a class="nav-link active" aria-current="page" href="#">홈</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="/post/create">글쓰기</a>
+        </li>
+        {% if user %}
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">로그아웃({{user.name}})</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
           <a class="nav-link" href="/auth/signup">회원가입</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/auth/login">로그인</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/logout">로그아웃</a>
-        </li>
+        {% endif %}
       </ul>
     </div>
   </div>

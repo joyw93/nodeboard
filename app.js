@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 
 dotenv.config();
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -39,20 +40,30 @@ app.use(session({
         secure: false,
     },
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/auth', authRouter);
 
+app.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+})
+
+app.use('/auth', authRouter);
+app.use('/post', postRouter);
 
 app.get('/', (req, res, next) => {
     res.render('main');
 })
+
 
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
     error.status = 404;
     next(error);
 });
+
+
 
 app.use((err, req, res, next) => {
     res.locals.message = err.message;
