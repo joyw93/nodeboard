@@ -7,7 +7,6 @@ const router = express.Router();
 
 
 router.get('/signup', (req, res) => {
-    console.log(req.user.name);
     res.render('signup');
 })
 
@@ -16,7 +15,7 @@ router.post('/signup', async (req, res) => {
     await User.create({
         name, email, password
     });
-    res.render('signup');
+    res.render('main');
 })
 
 
