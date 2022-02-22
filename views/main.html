@@ -1,9 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% if user %}
-{{user.name}}
-{% else %}
-{% endif %}
 
+<div class="row row-cols-1 row-cols-md-2 g-3 mx-2">
+    {% for post in posts %}
+    <div class="col">
+      <div class="card border-primary">
+        <div class="card-header">
+          <span class="badge bg-primary">모집중</span>
+        </div>
+        <a href="/post/{{post.id}}" class="card-body text-dark" style="text-decoration:none">
+          <h5 class="card-title fw-bold">{{post.title}}</h5>
+          <h6 class="text-muted mt-3">{{post.content}}&nbsp;·&nbsp;{{post.User.name}}
+          </h6>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 {% endblock %}

@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 dotenv.config();
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
-const { sequelize } = require('./models');
+const { sequelize, Post, User } = require('./models');
 const passportConfig = require('./passport');
 
 const app = express();
@@ -52,8 +52,21 @@ app.use((req, res, next) => {
 app.use('/auth', authRouter);
 app.use('/post', postRouter);
 
-app.get('/', (req, res, next) => {
-    res.render('main');
+app.get('/', async (req, res, next) => {
+    try {
+        const posts = await Post.findAll({
+            include: {
+            model: User,
+            attributes: ['name', 'email'],
+        },
+        order: [['createdAt']],})
+        res.render('main', {
+            posts: posts
+        });
+    }catch(error) {
+        console.error(error);
+    }
+    
 })
 
 
